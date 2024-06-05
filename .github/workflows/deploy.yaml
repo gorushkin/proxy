@@ -68,6 +68,13 @@ jobs:
           echo ${{vars.APP_PORT}}
           echo $SSH
 
+
+      - name: Debug SSH connection
+        run: |
+          ssh -o StrictHostKeyChecking=no user@remote_host 'echo "SSH connection successful"'
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Deploy to remote server
         run: |
           echo "Deploying to $SSH"
