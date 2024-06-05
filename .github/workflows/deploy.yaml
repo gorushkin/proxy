@@ -3,7 +3,7 @@ name: Deploy App
 on:
   push:
     branches:
-      - main
+      - master
 
 env:
   IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/${{ vars.APP_NAME }}:latest
@@ -28,8 +28,6 @@ jobs:
       - name: Add SSH key to known hosts
         run: |
           ssh-keyscan -H ${{ vars.SSH_HOST }} >> ~/.ssh/known_hosts
-
-
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
