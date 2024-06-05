@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run publishing
-        uses: ./.github/actions/publish
+        uses: ./.github/workflows/actions/publish
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.1
