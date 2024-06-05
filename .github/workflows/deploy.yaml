@@ -17,6 +17,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Run publishing
+        uses: ./.github/actions/publish
+
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.1
         with:
@@ -36,9 +39,6 @@ jobs:
 
       - name: Pull image from GHCR
         run: docker pull $IMAGE_NAME
-
-      - name: Show home network
-        run: echo ${{ vars.APP_NETWORK }}
 
       - name: Deploy to remote server
         run: |
