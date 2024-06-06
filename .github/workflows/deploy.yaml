@@ -36,18 +36,6 @@ jobs:
       - name: Pull image from GHCR
         run: docker pull $IMAGE_NAME
 
-      - name: Debug variables
-        run: |
-          echo "IMAGE_NAME: $IMAGE_NAME"
-          echo "SSH: $SSH"
-          echo "APP_NAME: ${{vars.APP_NAME}}"
-          echo "APP_NETWORK: ${{vars.APP_NETWORK}}"
-          echo "APP_PORT: ${{vars.APP_PORT}}"
-          echo "WORK_DIR: ${{vars.WORK_DIR}}"
-          echo "SSH_USER: ${{vars.SSH_USER}}"
-          echo "SSH_HOST: ${{vars.SSH_HOST}}"
-          echo "SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}"
-
       - name: Deploy to remote server
         run: |
           echo "Deploying to $SSH"
@@ -57,7 +45,4 @@ jobs:
           echo "Checking network..."
           ssh $SSH 'docker network inspect ${{vars.APP_NETWORK}} >/dev/null 2>&1 || docker network create ${{vars.APP_NETWORK}}'
           echo "Starting container..."
-          echo $IMAGE_NAME
-          echo ${{vars.WORK_DIR}}
-          echo ${{vars.APP_NAME}}
           ssh $SSH 'cd ${{vars.WORK_DIR}} && docker run -d --name ${{vars.APP_NAME}} --network ${{vars.APP_NETWORK}}  -p ${{vars.APP_PORT}}:80 ghcr.io/${{ github.repository_owner }}/${{ vars.APP_NAME }}:latest'
