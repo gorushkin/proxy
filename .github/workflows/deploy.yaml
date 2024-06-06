@@ -36,11 +36,17 @@ jobs:
       - name: Pull image from GHCR
         run: docker pull $IMAGE_NAME
 
-      # - name: Debug SSH connection
-      #   run: |
-      #     ssh -o StrictHostKeyChecking=no $SSH 'echo "SSH connection successful"'
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Debug variables
+        run: |
+          echo "IMAGE_NAME: $IMAGE_NAME"
+          echo "SSH: $SSH"
+          echo "APP_NAME: ${{vars.APP_NAME}}"
+          echo "APP_NETWORK: ${{vars.APP_NETWORK}}"
+          echo "APP_PORT: ${{vars.APP_PORT}}"
+          echo "WORK_DIR: ${{vars.WORK_DIR}}"
+          echo "SSH_USER: ${{vars.SSH_USER}}"
+          echo "SSH_HOST: ${{vars.SSH_HOST}}"
+          echo "SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}"
 
       - name: Deploy to remote server
         run: |
